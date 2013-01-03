@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Gradle"
+            id="gradle4eclipse.view">
+      </category>
+      <view
+            name="Gradle"
+            icon="icons/sample.gif"
+            category="gradle4eclipse.view"
+            class="gradle4eclipse.view.GradleView"
+            id="gradle4eclipse.view.gradleView">
+      </view>
+	</extension>
+	<extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.ProblemView"
+               relationship="right"
+               id="gradle4eclipse.view.GradleView">
+         </view>
+      </perspectiveExtension>
+	</extension>
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution
+			objectClass="org.eclipse.core.resources.IResource"
+			adaptable="true"
+			id="gradle4eclipse.convertToGradle">
+			<enablement>
+    			<not>
+					<or>
+						<test forcePluginActivation="true"
+    						property="org.eclipse.core.resources.projectNature"
+    						value="Gradle4Eclipse.gradlenature" />
+    				</or>
+				</not>
+			</enablement>
+			<action
+				class="gradle4eclipse.actions.AddGradleNature"
+				enablesFor="+"
+				icon="icons/sample.gif"
+				id="gradle4eclipse.actions.AddGradleNature"
+				label="Add Gradle Nature"
+				menubarPath="org.eclipse.ui.projectConfigure/additions">
+			</action>
+		</objectContribution>
+	</extension>
+	<extension point="org.eclipse.ui.console.consolePageParticipants">
+		<consolePageParticipant
+			id="gradle4eclipse.view.GradlePageParticipant"
+			class="gradle4eclipse.view.GradlePageParticipant">
+		</consolePageParticipant>
+	</extension>
+	<extension id="preferences" point="org.eclipse.core.runtime.preferences" name="preferences">
+		<scope name="project" class="org.eclipse.core.internal.resources.ProjectPreferences"/>
+	</extension>
+	<extension id="gradlenature" name="Gradle Nature" point="org.eclipse.core.resources.natures"> 
+		<runtime> 
+			<run class="gradle4eclipse.nature.GradleNature"/> 
+		</runtime> 
+		<requires-nature
+            id="org.eclipse.jdt.core.javanature">
+		</requires-nature>
+		<builder id="Gradle4Eclipse.gradlebuilder"/> 
+	</extension>
+	<extension id="gradlebuilder" name="Gradle Builder" point="org.eclipse.core.resources.builders">
+		<builder>
+			<run class="gradle4eclipse.builder.GradleBuilder">
+				<parameter name="optimize" value="true" />
+				<parameter name="comment" value="Builds Gradle projects" />
+			</run>
+		</builder>
+	</extension> 
+</plugin>
