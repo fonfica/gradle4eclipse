@@ -17,12 +17,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package gradle4eclipse.actions;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -67,22 +71,31 @@ public class AddGradleNature implements IObjectActionDelegate {
 					String[] natures = description.getNatureIds();
 					String[] newNatures = new String[natures.length + 1];
 					System.arraycopy(natures, 0, newNatures, 0, natures.length);
-					newNatures[natures.length] = "Gradle4Eclipse.gradlenature";
+					newNatures[natures.length] = "gradle4eclipse.gradlenature";
 					description.setNatureIds(newNatures);
 
 					ICommand[] cmds = description.getBuildSpec();
 					boolean found = false;
 					for (int j = 0; j < cmds.length; j++)
-						if (cmds[j].getBuilderName().equals("Gradle4Eclipse.gradlebuilder"))
+						if (cmds[j].getBuilderName().equals("gradle4eclipse.gradlebuilder"))
 					         found = true;
 					if(!found) {
 						ICommand buildCmd = description.newCommand();
-						buildCmd.setBuilderName("Gradle4Eclipse.gradlebuilder");
+						buildCmd.setBuilderName("gradle4eclipse.gradlebuilder");
 						List<ICommand> newCmds = new ArrayList<ICommand>();
 						newCmds.addAll(Arrays.asList(cmds));
 						newCmds.add(buildCmd);
 						description.setBuildSpec((ICommand[]) 
 							newCmds.toArray(new ICommand[newCmds.size()]));
+						IFolder rootFolder = project.getFolder("");
+						if(rootFolder.exists()) {
+							IFile gradleFile = rootFolder.getFile("buld.gradle");
+							if(gradleFile != null && !gradleFile.exists()) {
+								byte[] bytes = "apply plugin: \"java\"\n".getBytes();
+								InputStream source = new ByteArrayInputStream(bytes);
+								gradleFile.create(source, IResource.NONE, null);
+							}
+						}
 					}
 					project.setDescription(description, null);
 				} catch (CoreException e) {
