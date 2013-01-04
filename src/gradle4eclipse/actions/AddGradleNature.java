@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -87,14 +86,11 @@ public class AddGradleNature implements IObjectActionDelegate {
 						newCmds.add(buildCmd);
 						description.setBuildSpec((ICommand[]) 
 							newCmds.toArray(new ICommand[newCmds.size()]));
-						IFolder rootFolder = project.getFolder("");
-						if(rootFolder.exists()) {
-							IFile gradleFile = rootFolder.getFile("buld.gradle");
-							if(gradleFile != null && !gradleFile.exists()) {
-								byte[] bytes = "apply plugin: \"java\"\n".getBytes();
-								InputStream source = new ByteArrayInputStream(bytes);
-								gradleFile.create(source, IResource.NONE, null);
-							}
+						IFile gradleFile = project.getFile("build.gradle");
+						if(gradleFile != null && !gradleFile.exists()) {
+							byte[] bytes = "apply plugin: \"java\"\n".getBytes();
+							InputStream source = new ByteArrayInputStream(bytes);
+							gradleFile.create(source, IResource.NONE, null);
 						}
 					}
 					project.setDescription(description, null);
