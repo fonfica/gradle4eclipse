@@ -1,3 +1,20 @@
+/*
+Gradle4Eclipse Eclipse plugin
+Copyright (C) 2013  Filip Muncan
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 package gradle4eclipse.view;
 
 import gradle4eclipse.actions.ReloadBuildConfigAction;
@@ -49,7 +66,11 @@ public class RunCommand {
 	}
 	
 	private String getProjectPath() {
+		if(project == null)
+			return null;
 		IPath location = project.getLocation();
+		if(location == null)
+			return null;
 		return location.toPortableString();
 	}
 	
@@ -111,6 +132,8 @@ public class RunCommand {
 	}
 
 	public void run(String command, final boolean clearConsole) {
+		if(getProjectPath()==null)
+			return;
 		RunJob runJob = new RunJob("Gradle4Eclipse:run", command) {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {

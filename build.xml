@@ -3,16 +3,17 @@
 	<property name="version"  value="1.0.0"/>
 	<target name="build-jar">
 		<echo>Building JAR...</echo>
-		<jar destfile="gradle4eclipse_${version}.jar"
-			basedir="bin"
-			includes="*/**"
-		>
+		<zip destfile="gradle4eclipse_${version}.jar">
+			<fileset dir="bin">
+				<include name="*/**" />
+			</fileset>
 			<fileset dir=".">
-				<include name="**/icons/**"/>
+				<include name="icons/**" />
+				<include name="META-INF/**" />
 			</fileset>
 			<fileset file="plugin.xml"/>
 			<fileset file="LICENSE.txt"/>
-		</jar>
+		</zip>
 		<echo>Success</echo>
 	</target>
 </project>
