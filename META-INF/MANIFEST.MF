@@ -4,6 +4,7 @@ Bundle-Name: Gradle4Eclipse
 Bundle-SymbolicName: Gradle4Eclipse;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: gradle4eclipse.Activator
+Bundle-Localization: plugin
 Bundle-Vendor: gradle4eclipse
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

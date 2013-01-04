@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+	<project name="Gradle4Eclipse" default="build-jar">
+	<property name="version"  value="1.0.0"/>
+	<target name="build-jar">
+		<echo>Building JAR...</echo>
+		<jar destfile="gradle4eclipse_${version}.jar"
+			basedir="bin"
+			includes="*/**"
+		>
+			<fileset dir=".">
+				<include name="**/icons/**"/>
+			</fileset>
+			<fileset file="plugin.xml"/>
+			<fileset file="LICENSE.txt"/>
+		</jar>
+		<echo>Success</echo>
+	</target>
+</project>
