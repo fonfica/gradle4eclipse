@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gradle4Eclipse
+Bundle-Name: gradle4eclipse
 Bundle-SymbolicName: gradle4eclipse;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: gradle4eclipse.Activator

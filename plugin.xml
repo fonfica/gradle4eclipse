@@ -37,7 +37,7 @@
 					<or>
 						<test forcePluginActivation="true"
     						property="org.eclipse.core.resources.projectNature"
-    						value="Gradle4Eclipse.gradlenature" />
+    						value="gradle4eclipse.gradlenature" />
     				</or>
 				</not>
 			</enablement>
@@ -67,7 +67,7 @@
 		<requires-nature
             id="org.eclipse.jdt.core.javanature">
 		</requires-nature>
-		<builder id="Gradle4Eclipse.gradlebuilder"/> 
+		<builder id="gradle4eclipse.gradlebuilder"/> 
 	</extension>
 	<extension id="gradlebuilder" name="Gradle Builder" point="org.eclipse.core.resources.builders">
 		<builder>
